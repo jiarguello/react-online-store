@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './components/Home';
-import ShoppingCart from './components/ShoppingCart';
-import ProductDetails from './components/ProductDetails';
-import OrderSummary from './components/OrderSummary';
-import './App.css';
+import Home from './Pages/Home';
+import ShoppingCart from './Pages/ShoppingCart';
+import ProductDetails from './Pages/ProductDetails';
+import OrderSummary from './Pages/OrderSummary';
 
 class App extends React.Component {
   constructor(props) {
