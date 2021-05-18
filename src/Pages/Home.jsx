@@ -90,10 +90,9 @@ class Home extends React.Component {
               pathname: '/shopping-cart',
               state: addItem,
             } }
-            data-testid="shopping-cart-button"
           >
             Carrinho
-            <span data-testid="shopping-cart-size">{ addItem.length }</span>
+            <span>{ addItem.length }</span>
           </Link>
         </button>
       </div>
