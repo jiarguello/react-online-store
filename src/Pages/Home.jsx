@@ -27,22 +27,6 @@ class Home extends React.Component {
     this.setCart();
   }
 
-  handleSearchTextChange({ target }) {
-    const { value } = target;
-    this.setState({
-      searchText: value,
-    });
-  }
-
-  setCart() {
-    if (localStorage.getItem('shoppingCart')) {
-      const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
-      this.setState({
-        addItem: shoppingCart,
-      });
-    }
-  }
-
   addItemCart(id) {
     const { productsList } = this.state;
     const itemProduct = productsList.find((item) => id === item.id);
@@ -53,13 +37,6 @@ class Home extends React.Component {
       return ({
         addItem: [...prevState.addItem, itemProduct],
       });
-    });
-  }
-
-  async fetchByCategoryId(categoryId) {
-    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
-    this.setState({
-      productsList: fetchList.results,
     });
   }
 
@@ -75,6 +52,29 @@ class Home extends React.Component {
       this.setState({
         productsList: fetchList.results,
         showMessage: false,
+      });
+    }
+  }
+
+  async fetchByCategoryId(categoryId) {
+    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
+    this.setState({
+      productsList: fetchList.results,
+    });
+  }
+
+  handleSearchTextChange({ target }) {
+    const { value } = target;
+    this.setState({
+      searchText: value,
+    });
+  }
+
+  setCart() {
+    if (localStorage.getItem('shoppingCart')) {
+      const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+      this.setState({
+        addItem: shoppingCart,
       });
     }
   }
