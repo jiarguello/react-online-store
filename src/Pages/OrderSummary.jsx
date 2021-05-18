@@ -56,7 +56,6 @@ class OrderSummary extends React.Component {
         <input
           type="text"
           name="name"
-          data-testid="checkout-fullname"
           placeholder="Nome completo"
           required
         />
