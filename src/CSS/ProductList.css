@@ -1,0 +1,17 @@
+div .pai {
+  display: flex;
+  justify-content: center;
+}
+
+div .product {
+  background-color:black;
+  border-radius: 10px;
+  margin: 10px;
+  width: 250px;
+  justify-items: right;
+}
+
+img {
+  width: 150px;
+
+}
