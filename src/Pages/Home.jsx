@@ -14,37 +14,29 @@ class Home extends React.Component {
       categories: [],
       addItem: [],
     };
-    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+    this.addItemCart = this.addItemCart.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
-    this.addItemCart = this.addItemCart.bind(this);
+    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+    this.setCart = this.setCart.bind(this);
   }
 
   componentDidMount() {
     api.getCategories()
       .then((response) => this.setState({ categories: response }));
-  }
-
-  handleSearchTextChange({ target }) {
-    const { value } = target;
-    this.setState({
-      searchText: value,
-    });
+    this.setCart();
   }
 
   addItemCart(id) {
-    const { productsList, addItem } = this.state;
+    const { productsList } = this.state;
     const itemProduct = productsList.find((item) => id === item.id);
     itemProduct.quantity = 1;
-    this.setState({
-      addItem: [...addItem, itemProduct],
-    });
-  }
-
-  async fetchByCategoryId(categoryId) {
-    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
-    this.setState({
-      productsList: fetchList.results,
+    this.setState((prevState) => {
+      localStorage
+        .setItem('shoppingCart', JSON.stringify([...prevState.addItem, itemProduct]));
+      return ({
+        addItem: [...prevState.addItem, itemProduct],
+      });
     });
   }
 
@@ -60,6 +52,29 @@ class Home extends React.Component {
       this.setState({
         productsList: fetchList.results,
         showMessage: false,
+      });
+    }
+  }
+
+  async fetchByCategoryId(categoryId) {
+    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
+    this.setState({
+      productsList: fetchList.results,
+    });
+  }
+
+  handleSearchTextChange({ target }) {
+    const { value } = target;
+    this.setState({
+      searchText: value,
+    });
+  }
+
+  setCart() {
+    if (localStorage.getItem('shoppingCart')) {
+      const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+      this.setState({
+        addItem: shoppingCart,
       });
     }
   }
@@ -90,10 +105,8 @@ class Home extends React.Component {
               pathname: '/shopping-cart',
               state: addItem,
             } }
-            data-testid="shopping-cart-button"
           >
-            Carrinho
-            <span data-testid="shopping-cart-size">{ addItem.length }</span>
+            Carrinho { addItem.length }
           </Link>
         </button>
       </div>
