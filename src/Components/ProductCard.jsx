@@ -13,7 +13,7 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { products, onClick, cartItens } = this.props;
+    const { products, cartItens } = this.props;
     const isFreeShipping = <span>Frete Gratis!</span>;
     return (
       <div className="pai">

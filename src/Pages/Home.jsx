@@ -28,13 +28,6 @@ class Home extends React.Component {
     this.setCart();
   }
 
-  async fetchByCategoryId(categoryId) {
-    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
-    this.setState({
-      productsList: fetchList.results,
-    })
-  }
-
   addItemCart(id) {
     const { productsList } = this.state;
     const itemProduct = productsList.find((item) => id === item.id);
