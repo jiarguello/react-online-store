@@ -75,7 +75,7 @@ class ShoppingCart extends React.Component {
   renderEmptyCart() {
     return (
       <section>
-        <p data-testid="shopping-cart-empty-message">
+        <p>
           Seu carrinho está vazio
         </p>
       </section>
@@ -86,8 +86,7 @@ class ShoppingCart extends React.Component {
     const { totalPrice } = this.state;
     return (
       <p>
-        O valor total da compra: R$
-        { totalPrice }
+        O valor total da compra: R$ { totalPrice }
       </p>
     );
   }
@@ -130,19 +129,17 @@ class ShoppingCart extends React.Component {
                 src={ thumbnail }
                 alt={ `foto ${title}` }
               />
-              <p data-testid="shopping-cart-product-name">{ title }</p>
+              <p>{ title }</p>
               <div>
                 <button
                   type="button"
-                  data-testid="product-decrease-quantity"
                   onClick={ () => this.decreaseProductQuantity(id) }
                 >
                   -
                 </button>
-                <p data-testid="shopping-cart-product-quantity">{ quantity }</p>
+                <p>{ quantity }</p>
                 <button
                   type="button"
-                  data-testid="product-increase-quantity"
                   onClick={ () => this.increaseProductQuantity(id) }
                 >
                   +

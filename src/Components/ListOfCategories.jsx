@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
+import * as S from '../CSS/S.ListOfCategories';
 
 class ListOfCategories extends React.Component {
   render() {
@@ -8,20 +9,21 @@ class ListOfCategories extends React.Component {
     if (categories === 0) return <Loading />;
     return (
       <div>
-        <p>Categorias:</p>
+        <p>Categorias</p>
+        <ul>
         {
-          categories.map((elem) => (
-            <button
-              onClick={ () => onClickSelectedCategory(elem.id) }
-              key={ elem.id }
-              type="button"
-              data-testid="category"
-              value={ elem.name }
+          categories.map(({ id, name }) => (
+            <S.LI
+            onClick={ () => onClickSelectedCategory(id) }
+            key={ id }
+            type="button"
+            value={ name }
             >
-              { elem.name }
-            </button>
+              { name }
+            </S.LI>
           ))
         }
+        </ul>
       </div>
     );
   }
