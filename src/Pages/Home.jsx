@@ -17,6 +17,7 @@ class Home extends React.Component {
     this.addItemCart = this.addItemCart.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
+    this.addItemCart = this.addItemCart.bind(this);
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     this.setCart = this.setCart.bind(this);
   }
@@ -25,6 +26,13 @@ class Home extends React.Component {
     api.getCategories()
       .then((response) => this.setState({ categories: response }));
     this.setCart();
+  }
+
+  async fetchByCategoryId(categoryId) {
+    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
+    this.setState({
+      productsList: fetchList.results,
+    })
   }
 
   addItemCart(id) {
@@ -95,7 +103,7 @@ class Home extends React.Component {
         {
           showMessage ? emptySearchMessage : <ProductCard
             products={ productsList }
-            onClick={ this.addItemCart }
+            // onClick={ this.addItemCart }
             cartItens={ addItem }
           />
         }

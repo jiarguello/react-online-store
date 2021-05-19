@@ -9,11 +9,22 @@ class OrderSummary extends React.Component {
     this.state = {
       order: [...state],
       totalPrice: 0,
+      submit: false,
     };
     this.productsReview = this.productsReview.bind(this);
-    this.buyerInfos = this.buyerInfos.bind(this);
     this.totalPrice = this.totalPrice.bind(this);
-    this.paymentMethod = this.paymentMethod.bind(this);
+    this.inputsGenerator = this.inputsGenerator.bind(this);
+    this.paymentMethodInputs = this.paymentMethodInputs.bind(this);
+    this.submitPurchase = this.submitPurchase.bind(this);
+  }
+
+  submitPurchase() {
+    if (localStorage.getItem('shoppingCart')) {
+      localStorage.clear();
+      this.setState({
+        submit: true,
+      });
+    }
   }
 
   productsReview() {
@@ -50,101 +61,61 @@ class OrderSummary extends React.Component {
     });
   }
 
-  buyerInfos() {
+  inputsGenerator(type, name, placeholder, labelText) {
     return (
-      <div>
+      <label htmlFor={ `${name}-input` }>
+        { labelText }
         <input
-          type="text"
-          name="name"
-          placeholder="Nome completo"
+          type={ type }
+          name={ name }
+          id={ `${name}-input` }
+          placeholder={ placeholder }
           required
         />
-        <input
-          type="text"
-          name="CPF"
-          data-testid="checkout-cpf"
-          placeholder="CPF"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          data-testid="checkout-email"
-          placeholder="E-mail"
-          required
-        />
-        <input
-          type="text"
-          name="telefone"
-          data-testid="checkout-phone"
-          placeholder="Telefone"
-          required
-        />
-        <input
-          type="text"
-          name="CEP"
-          data-testid="checkout-cep"
-          placeholder="CEP"
-          required
-        />
-        <input
-          type="text"
-          name="address"
-          data-testid="checkout-address"
-          placeholder="Endereço"
-          required
-        />
-      </div>
-    );
+      </label>
+    )
   }
 
-  paymentMethod() {
+  paymentMethodInputs(id, labelText, value) {
     return (
-      <div>
-        <label htmlFor="boleto">
-          Boleto
-          <input
-            id="boleto"
-            type="radio"
-            name="payment"
-          />
-        </label>
-        <label htmlFor="creditcard">
-          Cartão de crédito
-          <input
-            id="creditcard"
-            type="radio"
-            name="payment"
-            value="visa"
-          />
-          Visa
-          <input
-            id="creditcard"
-            type="radio"
-            name="payment"
-            value="mastercard"
-          />
-          MasterCard
-          <input
-            id="creditcard"
-            type="radio"
-            name="payment"
-            value="elo"
-          />
-          Elo
-        </label>
-      </div>
+      <label htmlFor={ id }>
+        { labelText }
+        <input
+          id={ id }
+          type="radio"
+          name="payment"
+          value={ value }
+        />
+      </label>
     );
   }
 
   renderForm() {
     return (
       <form>
-        { this.buyerInfos() }
-        { this.paymentMethod() }
+        <div>
+          { this.inputsGenerator('text', 'name', 'Nome completo', 'Digite seu nome completo') }
+          { this.inputsGenerator('text', 'CPF', 'CPF', 'Digite seu CPF') }
+          { this.inputsGenerator('text', 'email', 'E-mail', 'Digite seu E-mail') }
+          { this.inputsGenerator('text', 'telefone', 'Telefone', 'Digite seu Telefone') }
+          { this.inputsGenerator('text', 'CEP', 'CEP', 'Digite seu CEP') }
+          { this.inputsGenerator('text', 'address', 'Endereço', 'Digite seu Endereço') }
+        </div>
+        <div>
+          <div>
+            <h5>Boleto</h5>
+            { this.paymentMethodInputs('boleto', 'Boleto', 'boleto') }
+          </div>
+          <div>
+            <h5>Cartão de crédito</h5>
+            { this.paymentMethodInputs('visa', 'Visa', 'visa') }
+            { this.paymentMethodInputs('mastercard', 'Mastercard', 'mastercard') }
+            { this.paymentMethodInputs('elo', 'Elo', 'elo') }
+          </div>
+        </div>
         <button
           type="button"
-          onClick={ () => console.log('XABLAU!') }
+          onClick={ this.submitPurchase }
         >
           Finalizar a Compra!
         </button>
@@ -153,11 +124,13 @@ class OrderSummary extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    const { submit } = this.state;
+    const submitted = <h1>Obrigado por comprar conosco!</h1>;
     return (
       <div>
-        { this.productsReview() }
-        { this.renderForm() }
+        { !submit && this.productsReview() }
+        { !submit && this.renderForm() }
+        { submit && submitted }
       </div>
     );
   }
