@@ -14,7 +14,7 @@ class ProductCard extends React.Component {
 
   render() {
     const { products, onClick, cartItens } = this.props;
-    const isFreeShipping = <span data-testid="free-shipping">Frete Gratis!</span>;
+    const isFreeShipping = <span>Frete Gratis!</span>;
     return (
       <div className="pai">
         {

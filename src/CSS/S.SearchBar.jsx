@@ -8,5 +8,5 @@ export const Div = styled.div`
 `
 
 export const Input = styled.input`
-  background-color: green;
+  background-color: white;
 `
