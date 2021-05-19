@@ -39,10 +39,8 @@ class ProductCard extends React.Component {
                 >
                   Ver detalhes
                 </Link>
-
               </div>))
         }
-
       </div>
     );
   }
