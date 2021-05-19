@@ -23,29 +23,18 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem('shoppingCart')) {
+      localStorage.setItem('shoppingCart', JSON.stringify([]));
+    }
     api.getCategories()
       .then((response) => this.setState({ categories: response }));
     this.setCart();
   }
 
-  async fetchByCategoryId(categoryId) {
-    const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
-    this.setState({
-      productsList: fetchList.results,
-    })
-  }
-
-  addItemCart(id) {
-    const { productsList } = this.state;
-    const itemProduct = productsList.find((item) => id === item.id);
-    itemProduct.quantity = 1;
-    this.setState((prevState) => {
-      localStorage
-        .setItem('shoppingCart', JSON.stringify([...prevState.addItem, itemProduct]));
-      return ({
-        addItem: [...prevState.addItem, itemProduct],
-      });
-    });
+  addItemCart(product) {
+    const currentCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    const newCart = [...currentCart, product];
+    localStorage.setItem('shoppingCart', JSON.stringify(newCart));
   }
 
   async fetchApiSearch() {
@@ -103,7 +92,7 @@ class Home extends React.Component {
         {
           showMessage ? emptySearchMessage : <ProductCard
             products={ productsList }
-            // onClick={ this.addItemCart }
+            onClick={ this.addItemCart }
             cartItens={ addItem }
           />
         }
