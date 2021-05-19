@@ -17,7 +17,7 @@ class Home extends React.Component {
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
-    this.addItemCart = this.addItemCart.bind(this);
+    // this.addItemCart = this.addItemCart.bind(this);
   }
 
   componentDidMount() {
@@ -32,14 +32,14 @@ class Home extends React.Component {
     });
   }
 
-  addItemCart(id) {
-    const { productsList, addItem } = this.state;
-    const itemProduct = productsList.find((item) => id === item.id);
-    itemProduct.quantity = 1;
-    this.setState({
-      addItem: [...addItem, itemProduct],
-    });
-  }
+  // addItemCart(id) {
+  //   const { productsList, addItem } = this.state;
+  //   const itemProduct = productsList.find((item) => id === item.id);
+  //   itemProduct.quantity = 1;
+  //   this.setState({
+  //     addItem: [...addItem, itemProduct],
+  //   });
+  // }
 
   async fetchByCategoryId(categoryId) {
     const fetchList = await api.getProductsFromCategoryAndQuery(categoryId, '');
@@ -80,7 +80,7 @@ class Home extends React.Component {
         {
           showMessage ? emptySearchMessage : <ProductCard
             products={ productsList }
-            onClick={ this.addItemCart }
+            // onClick={ this.addItemCart }
             cartItens={ addItem }
           />
         }
