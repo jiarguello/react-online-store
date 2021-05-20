@@ -6,7 +6,11 @@ import RatingForm from '../Components/RatingForm';
 class ProductDetails extends React.Component {
   constructor() {
     super();
+    this.state = {
+      toggle: false,
+    }
     this.addToCart = this.addToCart.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   addToCart() {
@@ -14,12 +18,26 @@ class ProductDetails extends React.Component {
     const currentProduct = JSON.parse(localStorage.getItem('currentItem'));
     const isOnCart = shoppingCart.some((product) => product.id === currentProduct.id);
     if (isOnCart) {
+      shoppingCart.find((product) => {
+        if (product.id === currentProduct.id) {
+          const { quantity, available_quantity: availableQuantity } = product;
+          if (quantity < availableQuantity) {
+            product.quantity = quantity + 1;
+            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+          }
+        }
+      });
+    } else {
       currentProduct.quantity = 1;
       const newCart = [...shoppingCart, currentProduct];
       localStorage.setItem('shoppingCart', JSON.stringify(newCart));
-    } else {
-      
     }
+  }
+
+  toggle() {
+    const { toggle } = this.state;
+    this.addToCart();
+    this.setState({ toggle: !toggle });
   }
 
   render() {
@@ -42,7 +60,7 @@ class ProductDetails extends React.Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ this.addToCart }
+          onClick={ this.toggle }
         >
           Adicionar ao Carrinho
         </button>

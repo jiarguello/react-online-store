@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
-    const { location } = this.props;
-    const { state } = location;
     this.state = {
-      listOfProducts: [...state],
       totalPrice: 0,
     };
     this.totalPrice = this.totalPrice.bind(this);
@@ -25,7 +22,7 @@ class ShoppingCart extends React.Component {
   }
 
   totalPrice() {
-    const { listOfProducts } = this.state;
+    const listOfProducts = JSON.parse(localStorage.getItem('shoppingCart'));
     const total = listOfProducts
       .reduce((acc, product) => acc + (product.price * product.quantity), 0);
     this.setState({
@@ -34,7 +31,7 @@ class ShoppingCart extends React.Component {
   }
 
   increaseProductQuantity(id) {
-    const { listOfProducts } = this.state;
+    const listOfProducts = JSON.parse(localStorage.getItem('shoppingCart'));
     const newCart = listOfProducts.map((item) => {
       const { available_quantity: availableQuantity } = item;
       if (item.id === id && availableQuantity > item.quantity) {
@@ -43,32 +40,26 @@ class ShoppingCart extends React.Component {
       }
       return item;
     });
-    this.setState({
-      listOfProducts: newCart,
-    });
+    localStorage.setItem('shoppingCart', JSON.stringify(newCart));
     this.totalPrice();
   }
 
   decreaseProductQuantity(id) {
-    const { listOfProducts } = this.state;
+    const listOfProducts = JSON.parse(localStorage.getItem('shoppingCart'));
     const item = listOfProducts.find((product) => product.id === id);
     if (item.quantity !== 0) {
       item.quantity -= 1;
     }
-    this.setState({
-      listOfProducts,
-    });
+    localStorage.setItem('shoppingCart', JSON.stringify(listOfProducts));
     this.totalPrice();
   }
 
   deleteProduct(id) {
-    const { listOfProducts } = this.state;
-    const removeItem = listOfProducts.find((product) => product.id === id);
-    const index = listOfProducts.indexOf(removeItem);
+    const listOfProducts = JSON.parse(localStorage.getItem('shoppingCart'));
+    const itemToRemove = listOfProducts.find((product) => product.id === id);
+    const index = listOfProducts.indexOf(itemToRemove);
     listOfProducts.splice(index, 1);
-    this.setState({
-      listOfProducts,
-    });
+    localStorage.setItem('shoppingCart', JSON.stringify(listOfProducts));
     this.totalPrice();
   }
 
@@ -92,26 +83,19 @@ class ShoppingCart extends React.Component {
   }
 
   renderCheckoutButton() {
-    const { listOfProducts } = this.state;
     return (
-      <button
-        type="button"
-      >
-        <Link
-          to={ {
-            pathname: '/order-summary',
-            state: listOfProducts,
-          } }
-          data-testid="checkout-products"
+      <Link to="/order-summary">
+        <button
+          type="button"
         >
           Revisar Compra
-        </Link>
-      </button>
+        </button>
+      </Link>
     );
   }
 
   render() {
-    const { listOfProducts } = this.state;
+    const listOfProducts = JSON.parse(localStorage.getItem('shoppingCart'));
     const emptyCart = this.renderEmptyCart();
     if (listOfProducts.length === 0) return emptyCart;
     return (
