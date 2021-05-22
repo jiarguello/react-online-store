@@ -14,7 +14,7 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { products, cartItens } = this.props;
+    const { products, addItemCart } = this.props;
     const isFreeShipping = <span>Frete Gratis!</span>;
     return (
       <S.Section>
@@ -37,21 +37,20 @@ class ProductCard extends React.Component {
                   <p>{ priceLocale }</p>
                   { (freeShipping) ? isFreeShipping : <p></p> }
                   <button
-                    data-testid="product-add-to-cart"
                     type="button"
-                    onClick={ () => { } }
+                    onClick={ () => addItemCart(element) }
                   >
                     Comprar
                   </button>
                   <Link
-                    to={ {
-                      pathname: `product-detail/${categoryId}/${id}`,
-                      state: [...cartItens],
-                    } }
-                    data-testid="product-detail-link"
-                    onClick={ () => this.setCurrentProduct(element) }
+                    to={ `product-detail/${categoryId}/${id}` }              
                   >
-                    Ver detalhes
+                    <button
+                      type="button"
+                      onClick={ () => this.setCurrentProduct(element) }
+                    >
+                      Ver detalhes
+                    </button>
                   </Link>
               </S.Div>
               )
