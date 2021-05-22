@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 class OrderSummary extends React.Component {
   constructor(props) {
     super(props);
-    const { location } = this.props;
-    const { state } = location;
     this.state = {
-      order: [...state],
       totalPrice: 0,
       submit: false,
     };
@@ -28,7 +25,8 @@ class OrderSummary extends React.Component {
   }
 
   productsReview() {
-    const { order, totalPrice } = this.state;
+    const order = JSON.parse(localStorage.getItem('shoppingCart'));
+    const { totalPrice } = this.state;
     return (
       <div>
         <h1>Revise seus Produtos</h1>
@@ -53,7 +51,7 @@ class OrderSummary extends React.Component {
   }
 
   totalPrice() {
-    const { order } = this.state;
+    const order  = JSON.parse(localStorage.getItem('shoppingCart'));
     const total = order
       .reduce((acc, product) => acc + (product.price * product.quantity), 0);
     this.setState({

@@ -1,84 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import * as api from '../services/api';
 import RatingForm from '../Components/RatingForm';
 
 class ProductDetails extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: [],
-      shoppingCart: [],
-    };
-    this.fetchCategory = this.fetchCategory.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-    this.setShoppingCart = this.setShoppingCart.bind(this);
-  }
-
-  componentDidMount() {
-    this.fetchCategory();
-    this.setShoppingCart();
-  }
-
-  setShoppingCart() {
-    const { location } = this.props;
-    const { state } = location;
-    if (state) {
-      this.setState({ shoppingCart: [...state] });
+      toggle: false,
     }
+    this.addToCart = this.addToCart.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   addToCart() {
-    const { product, shoppingCart } = this.state;
-    product.quantity = 1;
-    this.setState({ shoppingCart: [...shoppingCart, product] });
+    const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    const currentProduct = JSON.parse(localStorage.getItem('currentItem'));
+    const isOnCart = shoppingCart.some((product) => product.id === currentProduct.id);
+    if (isOnCart) {
+      shoppingCart.find((product) => {
+        if (product.id === currentProduct.id) {
+          const { quantity, available_quantity: availableQuantity } = product;
+          if (quantity < availableQuantity) {
+            product.quantity = quantity + 1;
+            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+          }
+        }
+      });
+    } else {
+      currentProduct.quantity = 1;
+      const newCart = [...shoppingCart, currentProduct];
+      localStorage.setItem('shoppingCart', JSON.stringify(newCart));
+    }
   }
 
-  async fetchCategory() {
-    const { match: { params: { categoryID, id } } } = this.props;
-    const productObj = await api.getProductsFromCategoryAndQuery(categoryID, '');
-    const productDetails = productObj.results
-      .find((product) => product.id === id);
-    this.setState({
-      product: productDetails,
-    });
+  toggle() {
+    const { toggle } = this.state;
+    this.addToCart();
+    this.setState({ toggle: !toggle });
   }
 
   render() {
-    const { product, shoppingCart } = this.state;
+    const product = JSON.parse(localStorage.getItem('currentItem'));
+    const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
     const { title, thumbnail, price } = product;
     return (
       <div>
         <p>
-          <span data-testid="product-detail-name">
-            { title }
-            {' '}
-            -
-            {' '}
-          </span>
-          <span>
-            R$
-            {' '}
-            { price }
-          </span>
+          { `${title} - R$ ${price}` }
         </p>
         <img src={ thumbnail } alt="product-thumbnail" />
         <RatingForm />
-        <Link
-          data-testid="shopping-cart-button"
-          to={ {
-            pathname: '/shopping-cart',
-            state: shoppingCart,
-          } }
-        >
-          Ir para carrinho
+        <Link to="/shopping-cart">
+          <button type="button">
+            Ir para carrinho
+            <span>{ shoppingCart.length }</span>
+          </button>
         </Link>
-        <span data-testid="shopping-cart-size">{ shoppingCart.length }</span>
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ this.addToCart }
+          onClick={ this.toggle }
         >
           Adicionar ao Carrinho
         </button>
