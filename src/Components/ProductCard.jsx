@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import * as S from '../CSS/S.ProductCard';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class ProductCard extends React.Component {
     const { products, addItemCart } = this.props;
     const isFreeShipping = <span>Frete Gratis!</span>;
     return (
-      <div className="pai">
+      <S.Section>
         {
           products
             .map((element) => {
@@ -28,12 +29,13 @@ class ProductCard extends React.Component {
                 category_id: categoryId,
                 shipping: { free_shipping: freeShipping },
               } = element;
+              const priceLocale = price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
               return (
-                <div key={ id }>
-                  <p>{ title }</p>
-                  <img src={ thumbnail } alt="produto" />
-                  <p>{ price }</p>
-                  { (freeShipping) ? isFreeShipping : '' }
+                <S.Div key={ id }>
+                  <S.P>{ title }</S.P>
+                  <S.Img src={ thumbnail } alt="produto" />
+                  <p>{ priceLocale }</p>
+                  { (freeShipping) ? isFreeShipping : <p></p> }
                   <button
                     type="button"
                     onClick={ () => addItemCart(element) }
@@ -50,11 +52,11 @@ class ProductCard extends React.Component {
                       Ver detalhes
                     </button>
                   </Link>
-              </div>
+              </S.Div>
               )
             })
         }
-      </div>
+      </S.Section>
     );
   }
 }
