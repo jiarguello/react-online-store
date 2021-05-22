@@ -16,7 +16,6 @@ class Home extends React.Component {
     this.addItemCart = this.addItemCart.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
-    this.addItemCart = this.addItemCart.bind(this);
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
   }
 
@@ -95,7 +94,7 @@ class Home extends React.Component {
         {
           showMessage ? emptySearchMessage : <ProductCard
             products={ productsList }
-            onClick={ this.addItemCart }
+            addItemCart={ this.addItemCart }
           />
         }
         <Link to="/shopping-cart">

@@ -13,7 +13,7 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { products, onClick, cartItens } = this.props;
+    const { products, addItemCart } = this.props;
     const isFreeShipping = <span>Frete Gratis!</span>;
     return (
       <div className="pai">
@@ -29,15 +29,14 @@ class ProductCard extends React.Component {
                 shipping: { free_shipping: freeShipping },
               } = element;
               return (
-                <div className="product" data-testid="product" key={ id }>
+                <div key={ id }>
                   <p>{ title }</p>
                   <img src={ thumbnail } alt="produto" />
                   <p>{ price }</p>
                   { (freeShipping) ? isFreeShipping : '' }
                   <button
-                    data-testid="product-add-to-cart"
                     type="button"
-                    onClick={ () => onClick(element) }
+                    onClick={ () => addItemCart(element) }
                   >
                     Comprar
                   </button>
