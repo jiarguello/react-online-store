@@ -54,9 +54,7 @@ class RatingForm extends React.Component {
               onChange={ (event) => this.handleChange('comment', event.target.value) }
             />
           </label>
-          <button
-            type="button"
-          >
+          <button type="button">
             Enviar Avaliação
           </button>
         </form>

@@ -12,11 +12,13 @@ class Home extends React.Component {
       searchText: '',
       productsList: [],
       categories: [],
+      toggle: false,
     };
     this.addItemCart = this.addItemCart.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +79,12 @@ class Home extends React.Component {
     });
   }
 
+  toggle(product) {
+    const { toggle } = this.state;
+    this.addItemCart(product);
+    this.setState({ toggle: !toggle });
+  }
+
   render() {
     const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
     const { productsList, showMessage, categories } = this.state;
@@ -94,7 +102,7 @@ class Home extends React.Component {
         {
           showMessage ? emptySearchMessage : <ProductCard
             products={ productsList }
-            addItemCart={ this.addItemCart }
+            toggle={ this.toggle }
           />
         }
         <Link to="/shopping-cart">

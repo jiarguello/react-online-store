@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { localeCurrency, inputsGenerator, paymentMethodInputs } from '../services/helpers';
 
 class OrderSummary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPrice: 0,
       submit: false,
     };
     this.productsReview = this.productsReview.bind(this);
     this.totalPrice = this.totalPrice.bind(this);
-    this.inputsGenerator = this.inputsGenerator.bind(this);
-    this.paymentMethodInputs = this.paymentMethodInputs.bind(this);
     this.submitPurchase = this.submitPurchase.bind(this);
   }
 
@@ -26,26 +24,19 @@ class OrderSummary extends React.Component {
 
   productsReview() {
     const order = JSON.parse(localStorage.getItem('shoppingCart'));
-    const { totalPrice } = this.state;
     return (
       <div>
         <h1>Revise seus Produtos</h1>
         {
-          order.map(({ title, thumbnail, quantity, id, price }) => (
+          order
+            .map(({ title, thumbnail, quantity, id, price }) => (
             <div key={ id }>
               <img src={ thumbnail } alt={ `foto ${title}` } />
-              <span>{ title }</span>
-              <span>
-                R$
-                { price * quantity }
-              </span>
+              <p>{ title } - { localeCurrency(price * quantity) }.</p>
             </div>
           ))
         }
-        <p>
-          Preço Total: R$
-          { totalPrice }
-        </p>
+        <p>Preço Total: { this.totalPrice() }.</p>
       </div>
     );
   }
@@ -54,61 +45,31 @@ class OrderSummary extends React.Component {
     const order  = JSON.parse(localStorage.getItem('shoppingCart'));
     const total = order
       .reduce((acc, product) => acc + (product.price * product.quantity), 0);
-    this.setState({
-      totalPrice: total,
-    });
-  }
-
-  inputsGenerator(type, name, placeholder, labelText) {
-    return (
-      <label htmlFor={ `${name}-input` }>
-        { labelText }
-        <input
-          type={ type }
-          name={ name }
-          id={ `${name}-input` }
-          placeholder={ placeholder }
-          required
-        />
-      </label>
-    )
-  }
-
-  paymentMethodInputs(id, labelText, value) {
-    return (
-      <label htmlFor={ id }>
-        { labelText }
-        <input
-          id={ id }
-          type="radio"
-          name="payment"
-          value={ value }
-        />
-      </label>
-    );
+    return localeCurrency(total);
   }
 
   renderForm() {
     return (
       <form>
         <div>
-          { this.inputsGenerator('text', 'name', 'Nome completo', 'Digite seu nome completo') }
-          { this.inputsGenerator('text', 'CPF', 'CPF', 'Digite seu CPF') }
-          { this.inputsGenerator('text', 'email', 'E-mail', 'Digite seu E-mail') }
-          { this.inputsGenerator('text', 'telefone', 'Telefone', 'Digite seu Telefone') }
-          { this.inputsGenerator('text', 'CEP', 'CEP', 'Digite seu CEP') }
-          { this.inputsGenerator('text', 'address', 'Endereço', 'Digite seu Endereço') }
+          <p>Digite seus dados abaixo</p>
+          { inputsGenerator('text', 'name', 'Nome completo') }
+          { inputsGenerator('number', 'CPF', 'CPF') }
+          { inputsGenerator('text', 'email', 'E-mail') }
+          { inputsGenerator('number', 'telefone', 'Telefone') }
+          { inputsGenerator('number', 'CEP', 'CEP') }
+          { inputsGenerator('text', 'address', 'Endereço') }
         </div>
         <div>
           <div>
             <h5>Boleto</h5>
-            { this.paymentMethodInputs('boleto', 'Boleto', 'boleto') }
+            { paymentMethodInputs('boleto') }
           </div>
           <div>
-            <h5>Cartão de crédito</h5>
-            { this.paymentMethodInputs('visa', 'Visa', 'visa') }
-            { this.paymentMethodInputs('mastercard', 'Mastercard', 'mastercard') }
-            { this.paymentMethodInputs('elo', 'Elo', 'elo') }
+            <h5>Cartão de crédito (selecione a bandeira)</h5>
+            { paymentMethodInputs('visa') }
+            { paymentMethodInputs('mastercard') }
+            { paymentMethodInputs('elo') }
           </div>
         </div>
         <button

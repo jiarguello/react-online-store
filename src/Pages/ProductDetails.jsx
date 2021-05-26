@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RatingForm from '../Components/RatingForm';
+import { localeCurrency } from '../services/helpers';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -46,9 +47,7 @@ class ProductDetails extends React.Component {
     const { title, thumbnail, price } = product;
     return (
       <div>
-        <p>
-          { `${title} - R$ ${price}` }
-        </p>
+        <p>{ `${title} - ${localeCurrency(price)}` }</p>
         <img src={ thumbnail } alt="product-thumbnail" />
         <RatingForm />
         <Link to="/shopping-cart">
@@ -59,7 +58,6 @@ class ProductDetails extends React.Component {
         </Link>
         <button
           type="button"
-          data-testid="product-detail-add-to-cart"
           onClick={ this.toggle }
         >
           Adicionar ao Carrinho

@@ -77,7 +77,7 @@ class ShoppingCart extends React.Component {
     const { totalPrice } = this.state;
     return (
       <p>
-        O valor total da compra: R$ { totalPrice }
+        O valor total da compra: R$ { totalPrice }.
       </p>
     );
   }
@@ -128,10 +128,7 @@ class ShoppingCart extends React.Component {
                 >
                   +
                 </button>
-                <span>
-                  R$
-                  { price }
-                </span>
+                <span>R$ { price }</span>
               </div>
             </div>
           ))

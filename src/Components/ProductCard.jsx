@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as S from '../CSS/S.ProductCard';
+import { localeCurrency } from '../services/helpers';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class ProductCard extends React.Component {
   }
 
   render() {
-    const { products, addItemCart } = this.props;
+    const { products, toggle } = this.props;
     const isFreeShipping = <span>Frete Gratis!</span>;
     return (
       <S.Section>
@@ -29,16 +30,15 @@ class ProductCard extends React.Component {
                 category_id: categoryId,
                 shipping: { free_shipping: freeShipping },
               } = element;
-              const priceLocale = price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
               return (
                 <S.Div key={ id }>
                   <S.P>{ title }</S.P>
                   <S.Img src={ thumbnail } alt="produto" />
-                  <p>{ priceLocale }</p>
-                  { (freeShipping) ? isFreeShipping : <p></p> }
+                  <p>{ localeCurrency(price) }</p>
+                  { (freeShipping) && isFreeShipping }
                   <button
                     type="button"
-                    onClick={ () => addItemCart(element) }
+                    onClick={ () => toggle(element) }
                   >
                     Comprar
                   </button>
@@ -62,9 +62,8 @@ class ProductCard extends React.Component {
 }
 
 ProductCard.propTypes = {
-  cartItens: PropTypes.arrayOf().isRequired,
+  toggle: PropTypes.arrayOf().isRequired,
   products: PropTypes.arrayOf().isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
