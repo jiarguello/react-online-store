@@ -4,6 +4,7 @@ import ListOfCategories from '../Components/ListOfCategories';
 import SearchBar from '../Components/SearchBar';
 import ProductCard from '../Components/ProductCard';
 import * as api from '../services/api';
+import * as S from '../CSS/S.Home';
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,11 +13,13 @@ class Home extends React.Component {
       searchText: '',
       productsList: [],
       categories: [],
+      hidden: true,
       toggle: false,
     };
     this.addItemCart = this.addItemCart.bind(this);
     this.fetchApiSearch = this.fetchApiSearch.bind(this);
     this.fetchByCategoryId = this.fetchByCategoryId.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     this.toggle = this.toggle.bind(this);
   }
@@ -79,6 +82,11 @@ class Home extends React.Component {
     });
   }
 
+  handleChange() {
+    const { hidden } = this.state;
+    this.setState({ hidden: !hidden });
+  }
+
   toggle(product) {
     const { toggle } = this.state;
     this.addItemCart(product);
@@ -87,16 +95,29 @@ class Home extends React.Component {
 
   render() {
     const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
-    const { productsList, showMessage, categories } = this.state;
+    const { productsList, showMessage, categories, hidden } = this.state;
     const emptySearchMessage = <p>Nenhum produto foi encontrado</p>;
     return (
-      <div>
-        <SearchBar
-          onSearchTextChange={ this.handleSearchTextChange }
-          onClickSearch={ this.fetchApiSearch }
-        />
+      <S.Main>
+        <S.Header>
+          <S.Button
+            type="button"
+            onClick={ this.handleChange }
+          >
+          </S.Button>
+          <SearchBar
+            onSearchTextChange={ this.handleSearchTextChange }
+            onClickSearch={ this.fetchApiSearch }
+          />
+          <Link to="/shopping-cart">
+            <button type="button">
+              Carrinho { shoppingCart !== null ? shoppingCart.length : 0 }
+            </button>
+          </Link>
+        </S.Header>
         <ListOfCategories
           categories={ categories }
+          hidden={ hidden }
           onClickSelectedCategory={ this.fetchByCategoryId }
         />
         {
@@ -105,12 +126,7 @@ class Home extends React.Component {
             toggle={ this.toggle }
           />
         }
-        <Link to="/shopping-cart">
-          <button type="button">
-            Carrinho { shoppingCart !== null ? shoppingCart.length : 0 }
-          </button>
-        </Link>
-      </div>
+      </S.Main>
     );
   }
 }

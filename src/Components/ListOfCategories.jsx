@@ -5,10 +5,11 @@ import * as S from '../CSS/S.ListOfCategories';
 
 class ListOfCategories extends React.Component {
   render() {
+    const { hidden } = this.props;
     const { categories, onClickSelectedCategory } = this.props;
     if (categories === 0) return <Loading />;
     return (
-      <div>
+      <S.Div visibility={hidden}>
         <p>Categorias</p>
         <ul>
         {
@@ -24,7 +25,7 @@ class ListOfCategories extends React.Component {
           ))
         }
         </ul>
-      </div>
+      </S.Div>
     );
   }
 }

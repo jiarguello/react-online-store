@@ -59,18 +59,14 @@ class OrderSummary extends React.Component {
           { inputsGenerator('number', 'telefone', 'Telefone') }
           { inputsGenerator('number', 'CEP', 'CEP') }
           { inputsGenerator('text', 'address', 'Endereço') }
-        </div>
-        <div>
-          <div>
-            <h5>Boleto</h5>
-            { paymentMethodInputs('boleto') }
-          </div>
-          <div>
-            <h5>Cartão de crédito (selecione a bandeira)</h5>
-            { paymentMethodInputs('visa') }
-            { paymentMethodInputs('mastercard') }
-            { paymentMethodInputs('elo') }
-          </div>
+
+          <h5>Boleto</h5>
+          { paymentMethodInputs('boleto') }
+
+          <h5>Cartão de crédito (selecione a bandeira)</h5>
+          { paymentMethodInputs('visa') }
+          { paymentMethodInputs('mastercard') }
+          { paymentMethodInputs('elo') }
         </div>
         <button
           type="button"
