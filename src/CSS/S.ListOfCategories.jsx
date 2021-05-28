@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const LI = styled.li`
+  color: white;
   list-style: none;
   &:hover {
     background-color: green;
