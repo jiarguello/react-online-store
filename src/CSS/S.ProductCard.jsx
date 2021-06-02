@@ -7,7 +7,7 @@ export const Section = styled.section`
   flex-wrap: wrap;
 `
 
-export const Div = styled.div`
+export const DivContainer = styled.div`
   align-items: center;
   background-color: white;
   box-sizing: border-box;
@@ -19,18 +19,32 @@ export const Div = styled.div`
   width: 300px;
 `
 
+export const DivP = styled.div`
+  heigth: 20%;
+  width: 100%;
+`
+
+export const DivIMG = styled.div`
+  display: flex;
+  justify-content: center;
+  heigth: 150px;
+  width: 100%;
+`
+
+export const DivB = styled.div`
+  display: flex;
+  heigth: 35%;
+  width: 100%;
+`
+
+
 export const Img = styled.img`
-  heigth: auto;
-  width: auto;
-  min-heigth: 150px;
-  min-width: 150px;
   max-heigth: 150px;
-  max-width: 150px;
 `
 export const P = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical; 
 ` 

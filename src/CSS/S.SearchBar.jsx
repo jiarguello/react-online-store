@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const SearchButton = styled.button`
   height: 40px;
   background-color: green;
-  cursor: pointer;
-  opacity: 0.8;
+
 `
 export const Div = styled.div`
   display: flex;

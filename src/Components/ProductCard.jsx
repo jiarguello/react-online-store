@@ -16,7 +16,7 @@ class ProductCard extends React.Component {
 
   render() {
     const { products, toggle } = this.props;
-    const isFreeShipping = <span>Frete Gratis!</span>;
+    const isFreeShipping = <span> - Frete Gratis!</span>;
     return (
       <S.Section>
         {
@@ -31,28 +31,33 @@ class ProductCard extends React.Component {
                 shipping: { free_shipping: freeShipping },
               } = element;
               return (
-                <S.Div key={ id }>
-                  <S.P>{ title }</S.P>
-                  <S.Img src={ thumbnail } alt="produto" />
-                  <p>{ localeCurrency(price) }</p>
-                  { (freeShipping) && isFreeShipping }
-                  <button
-                    type="button"
-                    onClick={ () => toggle(element) }
-                  >
-                    Comprar
-                  </button>
-                  <Link
-                    to={ `product-detail/${categoryId}/${id}` }              
-                  >
+                <S.DivContainer key={ id }>
+                  <S.DivP>
+                    <S.P>{ title }</S.P>
+                  </S.DivP>
+                    <S.DivIMG>
+                      <img style={ { height: "150px", width: "auto" }} src={ thumbnail } alt="produto" />
+                    </S.DivIMG>
+                  <S.DivB>
+                    <p>{ localeCurrency(price) } { (freeShipping) && isFreeShipping }</p>     
                     <button
                       type="button"
-                      onClick={ () => this.setCurrentProduct(element) }
+                      onClick={ () => toggle(element) }
                     >
-                      Ver detalhes
+                      Comprar
                     </button>
-                  </Link>
-              </S.Div>
+                    <Link
+                      to={ `product-detail/${categoryId}/${id}` }              
+                    >
+                      <button
+                        type="button"
+                        onClick={ () => this.setCurrentProduct(element) }
+                      >
+                        Ver detalhes
+                      </button>
+                    </Link>
+                  </S.DivB>
+              </S.DivContainer>
               )
             })
         }

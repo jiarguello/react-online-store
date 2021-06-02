@@ -5,6 +5,7 @@ import SearchBar from '../Components/SearchBar';
 import ProductCard from '../Components/ProductCard';
 import * as api from '../services/api';
 import * as S from '../CSS/S.Home';
+import Cart from '../Images/carrinho.png';
 
 class Home extends React.Component {
   constructor(props) {
@@ -100,20 +101,21 @@ class Home extends React.Component {
     return (
       <S.Main>
         <S.Header>
-          <S.Button
+          <S.ButtonMenu
             type="button"
             onClick={ this.handleChange }
           >
-          </S.Button>
+          </S.ButtonMenu>
           <SearchBar
             onSearchTextChange={ this.handleSearchTextChange }
             onClickSearch={ this.fetchApiSearch }
           />
-          <Link to="/shopping-cart">
-            <button type="button">
-              Carrinho { shoppingCart !== null ? shoppingCart.length : 0 }
-            </button>
-          </Link>
+          <S.Div>
+            <Link to="/shopping-cart">
+              <S.Span>{ shoppingCart !== null ? shoppingCart.length : 0 }</S.Span>
+              <S.CartIMG src={ Cart } alt="shopping cart" />
+            </Link>
+          </S.Div>
         </S.Header>
         <ListOfCategories
           categories={ categories }
