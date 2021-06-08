@@ -10,8 +10,6 @@ class ListOfCategories extends React.Component {
     if (categories === 0) return <Loading />;
     return (
       <S.Div visibility={hidden}>
-        <p>Categorias</p>
-        <ul>
         {
           categories.map(({ id, name }) => (
             <S.LI
@@ -24,7 +22,6 @@ class ListOfCategories extends React.Component {
             </S.LI>
           ))
         }
-        </ul>
       </S.Div>
     );
   }

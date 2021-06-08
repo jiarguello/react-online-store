@@ -1,4 +1,5 @@
 import React from 'react';
+import * as S from '../CSS/S.RatingForm';
 
 class RatingForm extends React.Component {
   constructor(props) {
@@ -20,21 +21,21 @@ class RatingForm extends React.Component {
   render() {
     const { email, rating, comment } = this.state;
     return (
-      <div>
-        <form>
-          <label htmlFor="email-input">
-            E-mail
-            <input
+      <S.Div>
+        <S.Form>
+          <S.Label htmlFor="email-input">
+            Email
+            <S.Input
               type="email"
               required
-              placeholder="E-mail"
+              placeholder="Digite seu email aqui..."
               value={ email }
               onChange={ (event) => this.handleChange('email', event.target.value) }
             />
-          </label>
-          <label htmlFor="rating-input">
+          </S.Label>
+          <S.Label htmlFor="rating-input">
             Avaliação
-            <input
+            <S.Input
               type="number"
               min={ 0 }
               max={ 5 }
@@ -42,23 +43,22 @@ class RatingForm extends React.Component {
               value={ rating }
               onChange={ (event) => this.handleChange('rating', event.target.value) }
             />
-          </label>
-          <label htmlFor="comment-input">
+          </S.Label>
+          <S.Label htmlFor="comment-input">
             Comentários
-            <textarea
-              data-testid="product-detail-evaluation"
-              placeholder="Comentários"
+            <S.Textarea
+              placeholder="Escreva aqui o que achou do produto..."
               value={ comment }
               rows="5"
               cols="20"
               onChange={ (event) => this.handleChange('comment', event.target.value) }
             />
-          </label>
-          <button type="button">
+          </S.Label>
+          <S.Button type="button">
             Enviar Avaliação
-          </button>
-        </form>
-      </div>
+          </S.Button>
+        </S.Form>
+      </S.Div>
     );
   }
 }

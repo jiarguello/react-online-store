@@ -36,25 +36,25 @@ class ProductCard extends React.Component {
                     <S.P>{ title }</S.P>
                   </S.DivP>
                     <S.DivIMG>
-                      <img style={ { height: "150px", width: "auto" }} src={ thumbnail } alt="produto" />
+                      <img style={ { height: "150px", width: "80%" }} src={ thumbnail } alt="produto" />
                     </S.DivIMG>
                   <S.DivB>
-                    <p>{ localeCurrency(price) } { (freeShipping) && isFreeShipping }</p>     
-                    <button
+                    <S.Price>{ localeCurrency(price) } { (freeShipping) && isFreeShipping }</S.Price>     
+                    <S.Button
                       type="button"
                       onClick={ () => toggle(element) }
                     >
                       Comprar
-                    </button>
+                    </S.Button>
                     <Link
                       to={ `product-detail/${categoryId}/${id}` }              
                     >
-                      <button
+                      <S.Button
                         type="button"
                         onClick={ () => this.setCurrentProduct(element) }
                       >
                         Ver detalhes
-                      </button>
+                      </S.Button>
                     </Link>
                   </S.DivB>
               </S.DivContainer>

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RatingForm from '../Components/RatingForm';
 import { localeCurrency } from '../services/helpers';
+import * as S from '../CSS/S.ProductDetails';
+import CartImg from '../Images/carrinho.png';
+import SearchBar from '../Components/SearchBar';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -43,26 +46,43 @@ class ProductDetails extends React.Component {
 
   render() {
     const product = JSON.parse(localStorage.getItem('currentItem'));
+    console.log(product);
     const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
     const { title, thumbnail, price } = product;
     return (
-      <div>
-        <p>{ `${title} - ${localeCurrency(price)}` }</p>
-        <img src={ thumbnail } alt="product-thumbnail" />
-        <RatingForm />
-        <Link to="/shopping-cart">
-          <button type="button">
-            Ir para carrinho
-            <span>{ shoppingCart.length }</span>
-          </button>
-        </Link>
-        <button
-          type="button"
-          onClick={ this.toggle }
-        >
-          Adicionar ao Carrinho
-        </button>
-      </div>
+      <S.Div>
+        <S.H3>{ `${title} - ${localeCurrency(price)}` }</S.H3>
+        <S.Main>
+          <S.Section>
+            <img style={ { height: '200px' }} src={ thumbnail } alt="product-thumbnail" />
+            <p>OLA ESTRANHO</p>
+          </S.Section>
+          <S.Aside>
+            <Link
+              style={ { 'text-decoration': 'none' } }
+              to="/shopping-cart"
+            >
+              <S.Button type="button">
+                Ir para carrinho
+                <S.DivButton>
+                  <S.CartImg
+                    src={ CartImg }
+                    alt="shopping-cart img"
+                  />
+                  <S.Span>{ shoppingCart.length }</S.Span>
+                </S.DivButton>
+              </S.Button>
+            </Link>
+            <S.Button
+              type="button"
+              onClick={ this.toggle }
+              >
+              Adicionar ao Carrinho
+            </S.Button>
+            <RatingForm />
+          </S.Aside>
+        </S.Main>
+      </S.Div>
     );
   }
 }

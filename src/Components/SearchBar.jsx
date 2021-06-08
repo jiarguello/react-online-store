@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as S from '../CSS/S.SearchBar';
+import searchIcon from '../Images/searchIcon.svg';
 
 class SearchBar extends React.Component {
   render() {
@@ -17,7 +18,11 @@ class SearchBar extends React.Component {
           type="button"
           onClick={ onClickSearch }
         >
-          Buscar
+          <img
+            src={ searchIcon }
+            alt="search-icon"
+            style={ { width: '80%', height: '80%' } }
+          />
         </S.SearchButton>
       </S.Div>
     );

@@ -43,7 +43,7 @@ export const CartIMG = styled.img`
 `
 
 export const Span = styled.span`
-  color: orange;
+  color: rgb(243, 168, 71);
   position: absolute;
   margin: -3px 5px 10px 13px;
   z-index: 1;
