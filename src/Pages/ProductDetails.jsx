@@ -5,7 +5,6 @@ import RatingForm from '../Components/RatingForm';
 import { localeCurrency } from '../services/helpers';
 import * as S from '../CSS/S.ProductDetails';
 import CartImg from '../Images/carrinho.png';
-import SearchBar from '../Components/SearchBar';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -46,16 +45,27 @@ class ProductDetails extends React.Component {
 
   render() {
     const product = JSON.parse(localStorage.getItem('currentItem'));
-    console.log(product);
+    // console.log(product);
     const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
-    const { title, thumbnail, price } = product;
+    const { title, thumbnail, price, attributes } = product;
     return (
       <S.Div>
-        <S.H3>{ `${title} - ${localeCurrency(price)}` }</S.H3>
+        <S.H3>{ title }</S.H3>
+        <S.Hr />
         <S.Main>
           <S.Section>
             <img style={ { height: '200px' }} src={ thumbnail } alt="product-thumbnail" />
-            <p>OLA ESTRANHO</p>
+            <S.DescriptionDiv>
+              <S.H4>Descrição do produto</S.H4>
+              <S.Hrsub />
+              <S.P>Valor - { localeCurrency(price) }</S.P>
+              {
+                attributes
+                  .map(({ name, value_name: valueName }) => (
+                    <S.P>{`${name} - ${valueName}`}</S.P>
+                  ))
+              }
+            </S.DescriptionDiv>
           </S.Section>
           <S.Aside>
             <Link

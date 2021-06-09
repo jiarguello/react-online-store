@@ -26,6 +26,7 @@ export const Textarea = styled.textarea`
 `
 
 export const Label = styled.label`
+  color: white;
   display: flex;
   flex-direction: column;
   padding: 5px;
@@ -36,4 +37,5 @@ export const Button = styled.button`
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
+  margin: 10px 0px 5px 0px;
 `

@@ -6,11 +6,6 @@ import ProductDetails from './Pages/ProductDetails';
 import OrderSummary from './Pages/OrderSummary';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>

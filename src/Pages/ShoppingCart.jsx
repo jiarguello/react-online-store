@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import * as S from '../CSS/S.ShoppingCart';
+import { localeCurrency } from '../services/helpers';
 
 class ShoppingCart extends React.Component {
   constructor(props) {
@@ -77,7 +79,7 @@ class ShoppingCart extends React.Component {
     const { totalPrice } = this.state;
     return (
       <p>
-        O valor total da compra: R$ { totalPrice }.
+        O valor total da compra: { localeCurrency(totalPrice) }.
       </p>
     );
   }
@@ -85,11 +87,11 @@ class ShoppingCart extends React.Component {
   renderCheckoutButton() {
     return (
       <Link to="/order-summary">
-        <button
+        <S.ButtonReview
           type="button"
         >
           Revisar Compra
-        </button>
+        </S.ButtonReview>
       </Link>
     );
   }
@@ -99,43 +101,55 @@ class ShoppingCart extends React.Component {
     const emptyCart = this.renderEmptyCart();
     if (listOfProducts.length === 0) return emptyCart;
     return (
-      <div>
-        {
-          listOfProducts.map(({ title, thumbnail, quantity, id, price }) => (
-            <div key={ id }>
-              <button
-                type="button"
-                onClick={ () => this.deleteProduct(id) }
-              >
-                X
-              </button>
-              <img
-                src={ thumbnail }
-                alt={ `foto ${title}` }
-              />
-              <p>{ title }</p>
-              <div>
+      <S.Main>
+        <S.Header>
+          <h1>Carrinho de Compras</h1>
+        </S.Header>
+        <S.SectionCards>
+          {
+            listOfProducts.map(({ title, thumbnail, quantity, id, price }) => (
+              <S.DivCard key={ id }>
                 <button
                   type="button"
-                  onClick={ () => this.decreaseProductQuantity(id) }
+                  onClick={ () => this.deleteProduct(id) }
                 >
-                  -
+                  X
                 </button>
-                <p>{ quantity }</p>
-                <button
-                  type="button"
-                  onClick={ () => this.increaseProductQuantity(id) }
-                >
-                  +
-                </button>
-                <span>R$ { price }</span>
-              </div>
-            </div>
-          ))
-        }
-        { this.renderTotalPrice() }
-        { this.renderCheckoutButton() }
-      </div>
+                <img
+                  style={ { 
+                    height: "100px", "max-height": "100px",
+                    "width": "auto", "max-width": "100px",
+                    "border-radius": "10%",
+                  } }
+                  src={ thumbnail }
+                  alt={ `foto ${title}` }
+                />
+                <S.Ptitle>{ title }</S.Ptitle>
+                <S.DivUpDown>
+                  <S.ButtonUpDown
+                    type="button"
+                    onClick={ () => this.decreaseProductQuantity(id) }
+                  >
+                    -
+                  </S.ButtonUpDown>
+                  <p>{ quantity }</p>
+                  <S.ButtonUpDown
+                    type="button"
+                    onClick={ () => this.increaseProductQuantity(id) }
+                  >
+                    +
+                  </S.ButtonUpDown>
+                </S.DivUpDown>
+                <p>{ localeCurrency(price) }</p>
+              </S.DivCard>
+            ))
+          }
+        </S.SectionCards>
+        <S.Footer>
+          { this.renderTotalPrice() }
+          { this.renderCheckoutButton() }
+        </S.Footer>
+      </S.Main>
     );
   }
 }

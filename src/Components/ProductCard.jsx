@@ -36,7 +36,7 @@ class ProductCard extends React.Component {
                     <S.P>{ title }</S.P>
                   </S.DivP>
                     <S.DivIMG>
-                      <img style={ { height: "150px", width: "80%" }} src={ thumbnail } alt="produto" />
+                      <img style={ { "height": "150px", width: "auto", "max-width": "80%" }} src={ thumbnail } alt="produto" />
                     </S.DivIMG>
                   <S.DivB>
                     <S.Price>{ localeCurrency(price) } { (freeShipping) && isFreeShipping }</S.Price>     

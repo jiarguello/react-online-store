@@ -15,7 +15,7 @@ export const Button = styled.button`
   border-radius: 15px;
   height: 30px;
   width: 200px;
-  opacity: 0.8;
+  opacity: 0.9;
   cursor: pointer;
   margin-top: 10px;
 
@@ -53,7 +53,6 @@ export const DivButton = styled.div`
   }
 `
 export const Main = styled.main`
-  color: white;
   display: flex;
   heigth: 100vh;
   width: 100%;
@@ -65,6 +64,7 @@ export const Section = styled.section`
   display: flex;
   width: 70%;
   margin-left: 50px;
+  justify-content: space-evenly;
 `
 
 export const Aside = styled.aside`
@@ -73,7 +73,27 @@ export const Aside = styled.aside`
   align-items: center;
   width: 30%;
   margin-right: 50px;
-  // border: 1px solid black;
   box-shadow: 0px 0px 0.5px 0.5px gray;
   border-radius: 5px;
+`
+export const Hr = styled.hr`
+  margin: 0px 0px 5vh 0px;
+  width: 70%;
+`
+export const Hrsub = styled.hr`
+  margin-bottom: 10px;
+  width: 100%;
+`
+
+export const P = styled.p`
+  margin: 5px 0px 5px 0px;
+`
+export const H4 = styled.h4`
+  margin: 0px;
+  text-align: center;
+`
+
+export const DescriptionDiv = styled.div`
+  display: flex;
+  flex-direction: column;
 `
