@@ -12,6 +12,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  align-items: center;
 `
 export const SectionCards = styled.section`
   height: 70vh;
@@ -52,7 +53,7 @@ export const DivUpDown = styled.div`
 `
 
 export const Footer = styled.footer`
-  height: 10vh;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;

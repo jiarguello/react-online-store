@@ -1,4 +1,5 @@
 import React from 'react';
+import * as S from '../CSS/S.OrderSummary';
 
 export const localeCurrency = (value) => {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -6,7 +7,7 @@ export const localeCurrency = (value) => {
 
 export const inputsGenerator = (type, name, placeholder) => {
   return (
-    <input
+    <S.Input
       type={ type }
       name={ name }
       id={ `${name}-input` }
